@@ -22,6 +22,6 @@ class ProductRepository(context: Context) {
     suspend fun getProducts(page: Int ): List<Product> {
         val pageSize = 30
         val offset = (page - 1) * pageSize
-        return productDao.getProductsByPage(page, offset)
+        return productDao.getProductsByPage(pageSize, offset)
     }
 }
