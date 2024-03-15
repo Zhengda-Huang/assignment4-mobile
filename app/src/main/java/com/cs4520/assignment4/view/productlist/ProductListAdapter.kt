@@ -47,6 +47,7 @@ class ProductListAdapter(private var productList: List<Product> = emptyList()) :
         holder.bind(productList[position])
     }
 
+    // notify any data change
     fun submitList(products: List<Product>) {
         productList = products
         notifyDataSetChanged()

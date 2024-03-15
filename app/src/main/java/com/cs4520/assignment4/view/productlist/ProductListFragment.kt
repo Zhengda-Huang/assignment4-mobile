@@ -53,6 +53,7 @@ class ProductListFragment : Fragment() {
         productListAdapter = ProductListAdapter()
         productListRecyclerView.adapter = productListAdapter
 
+        // loading observer see the api is still calling
         productListViewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.progressBar.visibility = View.VISIBLE
@@ -63,6 +64,7 @@ class ProductListFragment : Fragment() {
             }
         }
 
+        // products observer when there is new product being retrieve
         productListViewModel.products.observe(viewLifecycleOwner) { products ->
             logger.info("trying to check if the product list is empty")
             if (products.isEmpty()) {
@@ -75,24 +77,26 @@ class ProductListFragment : Fragment() {
             }
         }
 
+        // page observer in case any page change and fetch product base on the product
         productListViewModel.page.observe(viewLifecycleOwner) { page ->
             page?.let {
                 productListViewModel.fetchProducts()
             }
         }
 
+        //fetching product from api
         productListViewModel.fetchProducts()
 
+        //spinner adapter using
         val spinnerAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             numbersList.map { it.toString() }
         )
-
-
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         pageNumberSpinner.adapter = spinnerAdapter
 
+        // update the page select once the user select on the spinner
         pageNumberSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedPage = position + 1
@@ -105,6 +109,7 @@ class ProductListFragment : Fragment() {
         }
     }
 
+    // show no product message when there is no product bring retrieve
     private fun showNoProductsMessage() {
         noProductsTextView.visibility = View.VISIBLE
         binding.progressBar.visibility = View.GONE
@@ -113,6 +118,7 @@ class ProductListFragment : Fragment() {
 
     }
 
+    // hide no product message when there product bring retrieve
     private fun hideNoProductsMessage() {
         noProductsTextView.visibility = View.GONE
         binding.progressBar.visibility = View.GONE

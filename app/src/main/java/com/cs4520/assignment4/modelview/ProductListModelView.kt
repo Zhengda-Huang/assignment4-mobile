@@ -10,7 +10,6 @@ import com.cs4520.assignment4.model.database.Product
 import com.cs4520.assignment4.model.database.ProductRepository
 import kotlinx.coroutines.launch
 import java.util.logging.Logger
-import kotlin.math.log
 
 class ProductListViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -37,6 +36,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
         _page.value = pageNumber
     }
 
+    // insert the product into database
     fun insertProduct(products: List<Product>) {
         viewModelScope.launch {
             products.forEach { product ->
@@ -45,6 +45,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+    // fetch the project from the api in the case of there is no product we will be fetch from the database
     fun fetchProducts() {
         _loading.value = true
         val currentPage = _page.value ?: 1
@@ -77,6 +78,8 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+
+    // in case of there is no internet retrieve product from the databse
     private fun fetchProductsFromDatabase() {
         val currentPage = _page.value ?: 1
 

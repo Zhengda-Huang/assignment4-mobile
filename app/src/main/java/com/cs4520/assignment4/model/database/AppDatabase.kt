@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 abstract class ProductDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
+    // initialized the database project
     companion object {
         private var instance: ProductDatabase? = null
 

@@ -8,6 +8,7 @@ class ProductApiRequest() {
     private val apiService = ApiClient.ApiClient.apiService
     private val logger = Logger.getLogger("MyLogger")
 
+    // fetch the product from the api
     suspend fun fetchProducts(page : Int): List<Product> {
         try {
             logger.info("Start fetching products")

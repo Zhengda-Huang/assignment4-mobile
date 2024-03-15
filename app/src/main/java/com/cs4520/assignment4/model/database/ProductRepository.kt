@@ -13,12 +13,14 @@ class ProductRepository(context: Context) {
         productDao = database.productDao()
     }
 
+    // insert product into the database
     suspend fun insertProduct(product: Product) {
         withContext(Dispatchers.IO) {
             productDao.insert(product)
         }
     }
 
+    // retrieve the product base on the page number
     suspend fun getProducts(page: Int ): List<Product> {
         val pageSize = 30
         val offset = (page - 1) * pageSize
